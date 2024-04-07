@@ -1,0 +1,155 @@
+{% extends 'app.twig' %}
+{% block content %}
+
+    	<main id="main">
+
+		<!-- ======= Breadcrumbs ======= -->
+		<section class="breadcrumbs">
+			<div class="container">
+
+				<div class="d-flex justify-content-between align-items-center">
+					<h2>Results</h2>
+					<ol>
+						<li><a href="">Search</a></li>
+
+						<li>Results</li>
+					</ol>
+				</div>
+
+			</div>
+		</section><!-- End Breadcrumbs -->
+
+			<section id="contact" class="contact">
+				<div class="container">
+<div class="card">
+    <div class="card-header">
+        <h3>Results</h3>
+
+    </div>
+	<div class="card-body">
+        <hr/>
+        <p>You matched with <!-- NUMBER OF COMPANIES MATCHED --> </p>
+        <hr/>
+<div class="matches" id="companyContainer">
+    {% for company in matchedCompanies %}
+
+        {% if company.credits >=1 %}
+        <div class="matches__match">
+            <h3>{{ company.name }}</h3>
+            <p>{{ company.description }}</p>
+
+            <div :class="{ 'hidden': !isVisible('{{ company.id }}') }" v-if="isVisible"  id="cm{{company.id}}">
+                <p><strong>Email:</strong> {{ company.email }}</p>
+                <p><strong>Phone:</strong> {{ company.phone }}</p>
+                <p><strong>Website:</strong> {{ company.website }}</p>
+            </div>
+            <button href="#" class="matches__match__more" @click="toggleVisibility('{{ company.id }}')">More..</button>
+
+        </div>
+
+        <hr/>
+        {% endif %}
+    {% endfor %}
+
+
+
+</div>
+</div>
+</div>
+</div>
+</section>
+        </main>
+{% endblock %}
+{% block script %}
+    <script>
+        new Vue({
+            el: '#companyContainer',
+            data: {
+                matchedCompanies: [{/* Initially loaded companies */}],
+                totalCompanies: 0,
+                limit: 3, // Number of additional companies to load
+                offset: 3, // Number of initially loaded companies
+                visibleDivs: [],
+            },
+            created() {
+                window.addEventListener('beforeunload', this.handleBeforeUnload);
+            },
+            beforeDestroy() {
+                window.removeEventListener('beforeunload', this.handleBeforeUnload);
+            },
+            computed: {
+                showLoadMoreButton() {
+                    return this.offset < this.totalCompanies;
+                }
+            },
+            methods: {
+                handleBeforeUnload(event) {
+                    event.preventDefault();
+                    event.returnValue = '';
+
+                    // Show a confirmation dialog
+                    const confirmationMessage = 'Are you sure you want to leave this page?';
+                    event.returnValue = confirmationMessage;
+
+                    // Redirect the user to the search page if they confirm leaving
+                    if (confirm(confirmationMessage)) {
+                        // Perform any necessary cleanup or additional logic here
+
+                        // Redirect the user to the search page
+                        window.location.href = '/search';
+                    }
+                },
+                toggleVisibility(id) {
+                    const index = this.visibleDivs.indexOf(id);
+                    if (index === -1) {
+                        this.visibleDivs.push(id);
+                    } else {
+                        this.visibleDivs.splice(index, 1);
+                    }
+                },
+                isVisible(id) {
+                    return this.visibleDivs.includes(id);
+                },
+                loadMoreCompanies() {
+                    // Make an AJAX request or use any other technique to fetch additional companies
+                    // Append the fetched companies to the 'matchedCompanies' array
+                    fetch('/php_tech/public/get-more', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        // Pass any necessary parameters, such as offset and limit, to the server
+                        // For example:
+                        // params: {
+                        //   offset: this.offset,
+                        //   limit: this.limit
+                        // }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Append the fetched companies to the 'matchedCompanies' array
+                            this.matchedCompanies = this.matchedCompanies.concat(data.companies);
+                            this.offset += data.companies.length;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching companies:', error);
+                        });
+                    // Example code to append additional companies
+                    const additionalCompanies = [
+                        // Additional company objects
+                    ];
+
+                    this.matchedCompanies = this.matchedCompanies.concat(additionalCompanies);
+                    this.offset += additionalCompanies.length;
+                }
+            }
+        });
+    </script>
+
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+{% endblock %}

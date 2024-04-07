@@ -1,0 +1,289 @@
+{% extends 'app.twig' %}
+{% block content %}
+	<main id="main">
+
+		<!-- ======= Breadcrumbs ======= -->
+		<section class="breadcrumbs">
+			<div class="container">
+
+				<div class="d-flex justify-content-between align-items-center">
+					<h2>Search</h2>
+					<ol>
+						<li><a href="">Home</a></li>
+						<li>Search</li>
+					</ol>
+				</div>
+
+			</div>
+		</section><!-- End Breadcrumbs -->
+
+			<section id="contact" class="contact">
+				<div class="container">
+<div class="card">
+	<div class="card-body">
+
+					<div class="row">
+						<div class="col-lg-12  mt-lg-0 d-flex ">
+
+							<form action="/php-tech/public/submit-form" @submit="submitForm" method="post" role="form" >
+								<div class="card-header">
+								<h5>Contact Details</h5>
+								</div>
+								<hr/>
+								<div class="row">
+									<div class="form-group col-md-3">
+										<label for="name">First Name</label>
+										<input type="text" name="first_name" v-model="first_name" class="form-control" id="first_name" required="">
+									</div>
+									<div class="form-group col-md-3 mt-3 mt-md-0">
+										<label for="surname">Surname</label>
+										<input type="text" class="form-control" v-model="surname" name="surname" id="surname" required="">
+									</div>
+									<div class="form-group col-md-3 mt-3 mt-md-0">
+										<label for="name">Email Address</label>
+										<input type="email" class="form-control" name="email" v-model="email" id="email" required="">
+									</div>
+									<div class="form-group col-md-3">
+										<label for="name">Telephone Number</label>
+										<input type="number" class="form-control" name="phone" id="phone" v-model="phoneNumber" required value="00000111111">
+									</div>
+								</div>
+							<hr/>
+								<div class="card-header">
+								<h5>Address</h5>
+
+								</div>
+								<div class="row">
+									<div class="form-group col-md-3 mt-3">
+										<label for="address_line_1" class="required">Current address line 1</label>
+										<input type="text" name="address_line_1" class="form-control" id="address_line_1" required value="123 Current St">
+									</div>
+										<div class="form-group col-md-3 mt-3">
+										<label for="address_line_2">Current address line 2</label>
+										<input type="text" name="address_line_2" class="form-control" id="address_line_2">
+										</div>
+									<div class="form-group col-md-3 mt-3">
+										<label for="address_line_3">Current address line 3</label>
+										<input type="text" name="address_line_3" class="form-control" id="address_line_3">
+									</div>
+									<div class="form-group col-md-3 mt-3">
+										<label for="address_line_4">Current address line 4</label>
+										<input type="text" name="address_line_4" class="form-control" id="address_line_4">
+									</div>
+									<div class="form-group col-md-3 mt-3">
+										<label for="town" class="required">Current town/city</label>
+										<input type="text" name="town" id="town" v-model="city" class="form-control" required value="Current Town">
+									</div>
+									<div class="form-group col-md-3 mt-3">
+										<label for="county">Current county</label>
+										<input type="text" name="county" v-model="country" class="form-control" id="county">
+									</div>
+									<div class="form-group col-md-3 mt-3">
+										<label for="postcode" class="required">Current postcode</label>
+										<input type="text" name="postcode" id="postcode" v-model="postcode" class="form-control"  required value="CF11 9HB">
+									</div>
+								</div>
+
+								<hr/>
+								<div class="card-header">
+
+								<h5>Your Property</h5>
+								</div>
+								<div class="row">
+									<h5 class="form-check-label" >Property type</h5>
+
+									<div class="col-md-3 col-md-3">
+								<div class="form-check form-check-inline ">
+									<input class="form-check-input" value="apartment-flat" name="p_type" type="radio"  id="apartment-flat">
+									<label class="form-check-label" for="apartment-flat">Apartment/Flat</label>
+								</div>
+									</div>
+									<div class="col-md-3 col-md-3 mt-3">
+								<div class="form-check form-check-inline ">
+									<input class="form-check-input" type="radio" name="p_type" id="house" value="house">
+									<label class="form-check-label" for="house">House</label>
+								</div>
+									</div>
+									<div class="col-md-3 col-md-3 mt-3">
+								<div class="form-check form-check-inline ">
+									<input class="form-check-input" type="radio" name="p_type" id="bungalow" value="bungalow">
+									<label class="form-check-label" for="bungalow">	Bungalow</label>
+								</div>
+									</div>
+
+
+								</div>
+
+								<div class="row">
+									<p>
+										<label class="mt-3">How many bedrooms?</label>
+
+									<div class="form-group col-md-3">
+										<div class="form-check  ">
+					<input type="radio" value="1" name="bedrooms" required>
+											<label class="form-check-label" for="bedrooms">1 Bedroom</label>
+										</div>
+
+
+										<div class="form-check  ">
+					<input type="radio" value="2" name="bedrooms" required>
+											<label class="form-check-label" for="bedrooms">2 Bedrooms</label>
+										</div>
+
+
+										<div class="form-check  ">
+					<input type="radio" value="3" name="bedrooms" required>
+											<label class="form-check-label" for="bedrooms">3 Bedrooms</label>
+										</div>
+
+										<div class="form-check  ">
+					<input type="radio" value="4" name="bedrooms" required>
+											<label class="form-check-label" for="bedrooms">4 Bedrooms</label>
+										</div>
+
+
+										<div class="form-check ">
+					<input type="radio" value="5+" name="bedrooms" required>
+											<label class="form-check-label" for="bedrooms">5 Bedrooms or more </label>
+										</div>
+
+											</div>
+									<div class="col-md-3">
+										<label for="property_value">Property Value</label>
+										<input type="number" id="property_value" class="form-control" name="property_value" required data-min="20000" data-max="10000000" value="150000">
+
+									</div>
+
+
+
+									<hr/>
+									<div class="card-header">
+
+										<h5>A Few Final Details</h5>
+									</div>
+
+			<h5 for="type" class="required">Survey type</h5>
+									<div class="form-group col-md-3">
+
+										<div class="form-check  ">
+											<input type="radio" value="homebuyer" name="type" required>
+											<label class="form-check-label" for="homebuyer">HomeBuyer Survey</label>
+										</div><div class="form-check  ">
+											<input type="radio" value="homebuyer" name="type" required>
+											<label class="form-check-label" for="building">Building Survey</label>
+										</div><div class="form-check  ">
+											<input type="radio" value="homebuyer" name="type" required>
+											<label class="form-check-label" for="valuation">Valuation Survey</label>
+										</div>
+									</div>
+
+									<div class="form-group col-md-6">
+
+			<label for="additional_information">Any other information you think we should know?</label>
+			<textarea name="additional_information" id="additional_information" class="form-control" rows="5"></textarea>
+									</div>
+								</div>
+<div class="card-footer">
+	<p>
+		<button type="submit" name="compare" class="btn btn-primary" :disabled="isButtonDisabled"  >{{"{{ buttonText }}"}}
+		</button>
+	</p>
+</div>
+</form>
+	</div>
+</div>
+
+	</div>
+</div>
+			</div>
+				</div>
+		</section>
+
+	</main><!-- End #main -->
+
+
+{% endblock %}
+{% block script  %}
+	<script>
+		new Vue({
+			el: '#main',
+			data: {
+				postcode: '',
+				country: '',
+				city:'',
+				first_name:'',
+				surname:'',
+				phoneNumber:'',
+				email: '',
+				isButtonDisabled: false,
+				buttonText: 'Compare Now',
+			},
+			methods: {
+
+
+				submitForm(event) {
+					event.preventDefault();
+
+					//return;
+					// Trigger the form's submit event
+
+					const twoLetterPattern = /^[A-Za-z]{2}\d+/; // Two letters followed by numbers
+					const oneLetterPattern = /^[A-Za-z]\d+/; // One letter followed by numbers
+					const stringPattern = /^[A-Za-z\s]+$/;
+					const numberPattern = /^\d+$/; // Numeric characters only
+					const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email format
+					if (!twoLetterPattern.test(this.postcode) && !oneLetterPattern.test(this.postcode) || this.postcode.length > 8) {
+						alert('Invalid postcode format.');
+						//event.preventDefault(); // Prevent form submission when the postcode is invalid
+						return;
+					}
+
+					if (!stringPattern.test(this.country)) {
+						alert('Invalid country format. Country must contain only alphabetic characters.');
+						event.preventDefault(); // Prevent form submission when the country is invalid
+						return;
+					}
+					if (!stringPattern.test(this.city)) {
+						alert('Invalid City format. City must contain only alphabetic characters.');
+						event.preventDefault(); // Prevent form submission when the country is invalid
+						return;
+					}
+					if (!stringPattern.test(this.first_name)) {
+						alert('Invalid FirstName format. Firstname must contain only alphabetic characters.');
+						event.preventDefault(); // Prevent form submission when the country is invalid
+						return;
+					}
+					if (!stringPattern.test(this.surname)) {
+						alert('Invalid Surname format. Surname must contain only alphabetic characters.');
+						event.preventDefault(); // Prevent form submission when the country is invalid
+						return;
+					}
+
+					if (!numberPattern.test(this.phoneNumber) || this.phoneNumber.length > 11) {
+						alert('Invalid phone number format. Phone number must contain only numbers and should not exceed eleven digits.');
+						event.preventDefault();
+						return;
+					}
+
+					if (!emailPattern.test(this.email)) {
+						alert('Invalid email format.');
+						event.preventDefault();
+						return;
+					}
+					//disabled button for 5second before proceed
+					this.isButtonDisabled = true;
+					// Update button text to "Loading..."
+					this.buttonText = 'Loading...';
+					setTimeout(() => {
+						//console.log("am waiting");
+					}, 5000);
+
+					//perform default form submission
+					event.target.submit();
+
+
+				}
+			}
+		});
+	</script>
+{% endblock %}
